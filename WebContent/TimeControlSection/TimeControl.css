@@ -1,0 +1,172 @@
+/*
+*<+++++++++++++++++++++++++++++++++++++++++++++++++>
+*<================Time Line Button=================>
+*<+++++++++++++++++++++++++++++++++++++++++++++++++>
+*/
+.playControl-button {
+    padding-right: 1px;
+    padding-left: 1px;
+    border-style: solid;
+    border-color: #495057;
+    cursor: pointer;
+    float: left;
+}
+
+.playControl-button:active {
+    background-color: #495057;
+}
+
+.playControl-button-selected {
+    background-color: #495057;
+}
+
+.playControl-platform {
+    background-color: #6c757d;
+    border-radius: 20px;
+    height: 25px;
+    line-height: 13px;
+    width: 95%;
+    display: flex;
+    margin-left: 15px;
+    padding-right: 15px;
+}
+
+
+
+
+
+
+
+/*
+*<+++++++++++++++++++++++++++++++++++++++++++++++++>
+*<================Time Line Slider=================>
+*<+++++++++++++++++++++++++++++++++++++++++++++++++>
+*/
+.timeLine {
+    -webkit-appearance: none;
+    /* Hides the slider so that custom slider can be made */
+    width: auto;
+    /* Specific width is required for Firefox. */
+    background: transparent;
+    /* Otherwise white in Chrome */
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow: hidden;
+    flex: 1;
+
+}
+
+
+
+
+
+
+/*
+    Browser basic setting
+*/
+.timeLine::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+
+.timeLine:focus {
+    outline: none;
+    /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+.timeLine::-ms-track {
+    width: auto;
+    cursor: pointer;
+    /* Hides the slider so custom styles can be added */
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    Thumb setting
+*/
+.timeLine::-webkit-slider-thumb {
+    box-shadow: 1px 1px 1px #343a40, 0px 0px 1px #343a40;
+    border: 1px solid #343a40;
+    height: 21px;
+    width: 6px;
+    border-radius: 3px;
+    background-color: #ced4da;
+    cursor: pointer;
+    margin-top: -8px
+}
+.timeLine::-moz-range-thumb{
+    box-shadow: 1px 1px 1px #343a40, 0px 0px 1px #343a40;
+    border: 1px solid #343a40;
+    height: 21px;
+    width: 6px;
+    border-radius: 3px;
+    background-color: #ced4da;
+    cursor: pointer;
+    margin-top: -8px
+}
+.timeLine::-ms-thumb{
+    box-shadow: 1px 1px 1px #343a40, 0px 0px 1px #343a40;
+    border: 1px solid #343a40;
+    height: 21px;
+    width: 6px;
+    border-radius: 3px;
+    background-color: #ced4da;
+    cursor: pointer;
+    margin-top: -8px
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+    Thumb setting
+*/
+.timeLine::-webkit-slider-runnable-track {
+    height: 3px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #e9ecef;
+    border-radius: 1.3px;
+    border: none;
+    line-height: 13px;
+}
+
+.timeLine::-moz-range-track {
+    height: 3px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #e9ecef;
+    border-radius: 1.3px;
+    border: none;
+    line-height: 13px;
+}
+
+.timeLine::-ms-track {
+    height: 3px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #e9ecef;
+    border-radius: 1.3px;
+    border: none;
+    line-height: 13px;
+}
+

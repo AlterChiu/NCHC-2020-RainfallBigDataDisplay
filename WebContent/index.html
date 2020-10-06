@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css">
+
+  <link rel="stylesheet" href="theme.css" type="text/css">
+  <link rel="stylesheet" href="./RangeSection/RangeSectionStyle.css" type="text/css">
+  <link rel="stylesheet" href="./TimeControlSection/TimeControl.css" type="text/css">
+  <link rel="stylesheet" href="./MapControl/MapControl.css" type="text/css">
+  <link rel="stylesheet" href="./loadingPage.css" type="text/css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+</head>
+
+<body>
+  <div class="loadingPage">
+    <div class="lds-spinner">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+
+
+  <div class="">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12"></div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="text-center">大數據二維淹水模擬成果展示頁面</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-2">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 pl-3" style="background-color:gray">留白</div>
+        <div class="col-md-6 col-lg-9 pl-3">
+          <h1>網頁介紹文字</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-lg-3 pl-3">
+          <div class="row">
+            <div style="height:50px"> 留白 </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div id="rangeSection">
+                <div class="card">
+                  <div class="card-header range-selection-backgroud" id="rainfallDuration-selection">
+                    <h5 class="mb-0">
+                      <button class="range-selection-button" data-toggle="collapse" data-target="#county-data"
+                        aria-expanded="true" aria-controls="county-data"> 縣市選擇 <br>(Counties) </button>
+                    </h5>
+                  </div>
+                  <div id="county-data" class="collapse show" aria-labelledby="county-selection"
+                    data-parent="#rangeSection">
+                    <div id="county-value" class="card-body">
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header range-selection-backgroud" id="rainfallDuration-selection">
+                    <h5 class="mb-0">
+                      <button class="range-selection-button" data-toggle="collapse" data-target="#rainfallDuration-data"
+                        aria-expanded="true" aria-controls="rainfallDuration-data"> 降雨延時<br> (Rainfall duration)
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="rainfallDuration-data" class="collapse" aria-labelledby="rainfallDuration-selection"
+                    data-parent="#rangeSection">
+                    <div id="rainfallDuration-value" class="card-body">
+                      <div class="row py-1">
+                        <div class="col-6">
+                          <div class="range-selection-value range-selection-value-selected" data-value="12">12hr</div>
+                        </div>
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="24">24hr</div>
+                        </div>
+                      </div>
+                      <div class="row py-1">
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="48">48hr</div>
+                        </div>
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="72">72hr</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header range-selection-backgroud" id="rainfallDepth-selection">
+                    <h5 class="mb-0">
+                      <button class="range-selection-button" data-toggle="collapse" data-target="#rainfallDepth-data"
+                        aria-expanded="false" aria-controls="rainfallDepth-data"> 降雨量<br> (Rainfall Depth) </button>
+                    </h5>
+                  </div>
+                  <div id="rainfallDepth-data" class="collapse" aria-labelledby="rainfallDepth-selection"
+                    data-parent="#rangeSection">
+                    <div id="rainfallDepth-value" class="card-body">
+                      <div class="row py-1">
+                        <div class="col-6">
+                          <div class="range-selection-value range-selection-value-selected" data-value="100">100mm</div>
+                        </div>
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="200">200mm</div>
+                        </div>
+                      </div>
+                      <div class="row py-1">
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="350">350mm</div>
+                        </div>
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="500">500mm</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header range-selection-backgroud" id="rainfallIntensity-section">
+                    <h5 class="mb-0">
+                      <button class="range-selection-button" data-toggle="collapse"
+                        data-target="#rainfallIntensity-data" aria-expanded="false"
+                        aria-controls="rainfallIntensity-data"> 最大降雨量<br> (Max Rainfall intensity) </button>
+                    </h5>
+                  </div>
+                  <div id="rainfallIntensity-data" class="collapse" aria-labelledby="rainfallIntensity-section"
+                    data-parent="#rangeSection">
+                    <div id="rainfallIntensity-value" class="card-body">
+                      <div class="row py-1">
+                        <div class="col-6">
+                          <div class="range-selection-value range-selection-value-selected" data-value="10">10 mm/hr
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="50">50 mm/hr</div>
+                        </div>
+                      </div>
+                      <div class="row py-1">
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="100">100 mm/hr</div>
+                        </div>
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="150">150 mm/hr</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header range-selection-backgroud" id="rainfallPattern-section">
+                    <h5 class="mb-0">
+                      <button class="range-selection-button" data-toggle="collapse" data-target="#rainfallPattern-data"
+                        aria-expanded="false" aria-controls="rainfallPattern-data"> 雨型<br> (Storm Pattern) </button>
+                    </h5>
+                  </div>
+                  <div id="rainfallPattern-data" class="collapse" aria-labelledby="rainfallPattern-section"
+                    data-parent="#rangeSection">
+                    <div id="rainfallPattern-value" class="card-body">
+                      <div class="row py-1">
+                        <div class="col-6">
+                          <div class="range-selection-value range-selection-value-selected" data-value="forward">前進型
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="midium">中間型</div>
+                        </div>
+                      </div>
+                      <div class="row py-1">
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="mean">均勻型</div>
+                        </div>
+                        <div class="col-6">
+                          <div class="range-selection-value" data-value="delay">延後型</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="selection-result-title">篩選成果</div>
+              <div class="selection-result-box">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 col-lg-9 pr-4">
+          <div class="row">
+            <div class="col-md-6 col-large-6">
+              <div class="row">
+                <div class="col-md-12 px-1">
+                  <div style="height:50px"> 淹水資訊 </div>
+                  <div id="floodMap" class="map"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-large-12">
+                  <h5 class="">淹水filter</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-large-6">
+              <div class="row">
+                <div class="col-md-12 px-1">
+                  <div style="height:50px"> 雨量資訊 </div>
+                  <div id="rainfallMap" class="map"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-large-12">
+                  <h5 class="">雨量filter</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row playControl-platform px-2">
+            <div id="play-button" class="playControl-button">
+              <svg width="18" height="18" viewBox="5 5 14 14" fill="none">
+                <path d="M15 12.3301L9 16.6603L9 8L15 12.3301Z" fill="#dee2e6"></path>
+              </svg>
+            </div>
+            <div id="pause-button" class="playControl-button">
+              <svg width="18" height="18" viewBox="4 4 16 16" fill="none">
+                <path d="M11 7H8V17H11V7Z" fill="#dee2e6"></path>
+                <path d="M13 17H16V7H13V17Z" fill="#dee2e6"></path>
+              </svg>
+            </div>
+            <div id="stop-button" class="playControl-button">
+              <svg width="18" height="18" viewBox="3 3 18 18" fill="none">
+                <path d="M7 7H17V17H7V7Z" fill="#dee2e6"></path>
+              </svg>
+            </div>
+            <input class="timeLine" type="range" id="timeLine" min="1" max="12" step="1">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+
+  <!-- Leaflet plugin -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+  <script src="./MapControl/L.Map.Sync.js"></script>
+
+  <!-- user plugin -->
+  <script src="./MapControl/MapControl.js"></script>
+  <script src="./TimeControlSection/TimeControl.js"></script>
+  <script src="./RangeSection/RangeSectionAction.js"></script>
+
+
+</body>
+
+</html>

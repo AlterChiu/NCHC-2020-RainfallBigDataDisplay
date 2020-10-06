@@ -1,0 +1,95 @@
+body {
+    /*text selection disable*/
+    user-select: none;
+    /* supported by Chrome and Opera */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+}
+
+.range-selection-button {
+    text-align: left;
+    font-family: "Microsoft JhengHei";
+    font-weight: bold;
+    color: #001233;
+    outline: none;
+    background-color: #979dac;
+    border: none;
+    font-size: 14pt;
+    width: 100%;
+    padding: 8px 12px;
+}
+
+.range-selection-button:focus {
+    outline: none;
+    border: none;
+}
+
+.range-selection-backgroud {
+    background-color: #979dac;
+    padding: 0px 0px;
+}
+
+.card-body {
+    padding: 9px;
+    text-align: center;
+    font-family: "Microsoft JhengHei";
+    font-weight: bold;
+}
+
+.range-selection-value {
+    width: 100%;
+    height: 50px;
+    line-height: 40px;
+    padding: 5px;
+    border-radius: 20px;
+    font-size: 14pt;
+    cursor: pointer;
+    background-color: #edf2fb;
+    box-shadow: 0 5px #999;
+}
+
+.range-selection-value:hover {
+    background-color: #d7e3fc;
+}
+
+.range-selection-value:active {
+    background-color: #abc4ff;
+    box-shadow: 0 2px #666;
+}
+
+.range-selection-value-selected {
+    background-color: #abc4ff;
+    box-shadow: 0 2px #666;
+}
+
+.selection-result-title {
+    background-color: #979dac;
+    text-align: center;
+    font-family: "Microsoft JhengHei";
+    font-weight: bold;
+    color: #001233;
+    height: 50px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    line-height: 40px;
+    margin-top: 6px
+}
+
+.selection-result-box {
+    background-color: white;
+    border-style: solid;
+    border-top-style: none;
+    border-color: #979dac;
+    text-align: center;
+    height: auto;
+    padding: 10px;
+    font-family: "Microsoft JhengHei";
+    font-weight: bold;
+}
+
