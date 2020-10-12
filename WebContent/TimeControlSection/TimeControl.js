@@ -107,8 +107,8 @@ class TimeLineTimer {
 
     reSet() {
         this.stop();
-        MapControl.mapControl.setViewRainfallMap(this.pngProperties.centerX, this.pngProperties.centerY, TimeLineTimer.pngProperties.zoom);
-        MapControl.mapControl.setViewRainfallMap(this.pngProperties.centerX, this.pngProperties.centerY, TimeLineTimer.pngProperties.zoom);
+        MapControl.mapControl.setViewRainfallMap(this.pngProperties.maxX, this.pngProperties.maxY, this.pngProperties.minX , this.pngProperties.minY);
+        // MapControl.mapControl.setViewRainfallMap(this.pngProperties.centerX, this.pngProperties.centerY, TimeLineTimer.pngProperties.zoom);
     }
 
     loadPNG(){
@@ -125,9 +125,10 @@ class TimeLineTimer {
     
             MapControl.mapControl.addRainfallPNG(rainfallUrl , maxX , maxY , minX , minY);
             MapControl.mapControl.addFloodPNG(floodUrl , maxX , maxY , minX , minY);
-            MapControl.mapControl.enableDragging();
         }catch(e){
         }
+
+        MapControl.mapControl.enableDragging();
     }
 }
 TimeLineTimer.timeLineTimer = new TimeLineTimer();

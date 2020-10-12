@@ -130,6 +130,16 @@ function initialCounties() {
 
             initialRangeStyleChangeOnClick();
             reloadResultBox();
+
+            // setting county title
+            $.each($("#county-value").find("." + normalClass) , function(){
+                $(this).click(function(){
+                    $("#countyTitle").empty();
+                    $("#countyTitle").append($(this).text());
+                    $("#countyTitle").trigger("click");
+                });
+            });
+            $("#county-value").find("." + normalClass).first().trigger("click");
         },
     });
 
@@ -236,6 +246,9 @@ var getEventPngList = function (event) {
         // before respons success, block the page
         $(".loadingPage").show();
 
+        // trigger stop to initial time-control
+        $("#stop-button").trigger("click");
+
         // get parent by class(.card-body)
         var parentCard = event.closest(".selection-result-box");
 
@@ -261,12 +274,11 @@ var getEventPngList = function (event) {
                 TimeLineTimer.timeLineTimer.setPngProperties(data);
 
                 // set timeLine control
-                TimeLineTimer.timeLineTimer.stop();
                 $("#timeLine").attr("max", data["pngUrl"].length);
 
                 // set map to county center
-                MapControl.mapControl.setViewFloodMap(data.centerX, data.centerY, data.zoom);
-                MapControl.mapControl.setViewRainfallMap(data.centerX, data.centerY, data.zoom);
+                MapControl.mapControl.setViewFloodMap(data.maxX, data.maxY, data.minX , data.minY);
+                // MapControl.mapControl.setViewRainfallMap(data.centerX, data.centerY, data.zoom);
 
                 // load first png
                 TimeLineTimer.timeLineTimer.loadPNG();

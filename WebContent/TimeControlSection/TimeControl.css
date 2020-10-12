@@ -4,24 +4,37 @@
 *<+++++++++++++++++++++++++++++++++++++++++++++++++>
 */
 .playControl-button {
-    padding-right: 1px;
-    padding-left: 1px;
+    padding-right: 0px;
+    padding-left: 0px;
     border-style: solid;
-    border-color: #495057;
+    border-color: #e6e6e9;
+    
+    border-radius:14px;
+    fill:#66666e;
     cursor: pointer;
     float: left;
+    margin-right:-2px;
 }
 
-.playControl-button:active {
-    background-color: #495057;
+
+.playControl-button:hover{
+    background-color: #c9c9cac9;
+}
+
+.playControl-button:active{
+    background-color: rgba(139, 139, 139, 0.788)
 }
 
 .playControl-button-selected {
-    background-color: #495057;
+    background-color: #9999a1;
+}
+
+.playControl-button-selected:hover {
+    background-color: #9999a1;
 }
 
 .playControl-platform {
-    background-color: #6c757d;
+    background-color: #e6e6e9;
     border-radius: 20px;
     height: 25px;
     line-height: 13px;
@@ -97,32 +110,32 @@
     Thumb setting
 */
 .timeLine::-webkit-slider-thumb {
-    box-shadow: 1px 1px 1px #343a40, 0px 0px 1px #343a40;
+    box-shadow: 1px 1px 1px #343a40d5, 0px 0px 1px #343a40d7;
     border: 1px solid #343a40;
     height: 21px;
     width: 6px;
     border-radius: 3px;
-    background-color: #ced4da;
+    background-color: #9999a1;
     cursor: pointer;
     margin-top: -8px
 }
 .timeLine::-moz-range-thumb{
-    box-shadow: 1px 1px 1px #343a40, 0px 0px 1px #343a40;
-    border: 1px solid #343a40;
+    box-shadow: 1px 1px 1px #343a40d5, 0px 0px 1px #343a40d7;
+    border: 1px solid #95989b;
     height: 21px;
     width: 6px;
     border-radius: 3px;
-    background-color: #ced4da;
+    background-color: #9999a1;
     cursor: pointer;
     margin-top: -8px
 }
 .timeLine::-ms-thumb{
-    box-shadow: 1px 1px 1px #343a40, 0px 0px 1px #343a40;
+    box-shadow: 1px 1px 1px #343a40d5, 0px 0px 1px #343a40d7;
     border: 1px solid #343a40;
     height: 21px;
     width: 6px;
     border-radius: 3px;
-    background-color: #ced4da;
+    background-color: #9999a1;
     cursor: pointer;
     margin-top: -8px
 }
@@ -138,13 +151,13 @@
 
 
 /*
-    Thumb setting
+    track setting
 */
 .timeLine::-webkit-slider-runnable-track {
     height: 3px;
     cursor: pointer;
     box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    background: #e9ecef;
+    background: #9999a1;
     border-radius: 1.3px;
     border: none;
     line-height: 13px;
@@ -154,7 +167,7 @@
     height: 3px;
     cursor: pointer;
     box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    background: #e9ecef;
+    background: #9999a1;
     border-radius: 1.3px;
     border: none;
     line-height: 13px;
@@ -164,7 +177,7 @@
     height: 3px;
     cursor: pointer;
     box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    background: #e9ecef;
+    background: #9999a1;
     border-radius: 1.3px;
     border: none;
     line-height: 13px;

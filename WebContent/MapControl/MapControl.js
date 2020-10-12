@@ -12,14 +12,19 @@ class MapControl {
     }
 
 
-    setViewRainfallMap(x, y, z) {
-        this.rainfallMap.setView([y, x], z);
+    setViewRainfallMap(maxX , maxY , minX , minY){
+        let imageBound = [[minY , minX] , [maxY , maxX]];
+        this.rainfallMap.fitBounds(imageBound , {
+            animate : false
+        });
     }
 
-    setViewFloodMap(x, y, z) {
-        this.floodMap.setView([y, x], z);
+    setViewFloodMap(maxX , maxY , minX , minY){
+        let imageBound = [[minY , minX] , [maxY , maxX]];
+        this.floodMap.fitBounds(imageBound , {
+            animate : false
+        });
     }
-    
 
 
     /*
@@ -60,7 +65,7 @@ class MapControl {
         set image
     */
     addRainfallPNG(imageUrl , maxX , maxY , minX , minY){
-        let imageBound = [[minX , minY] , [maxX , maxY]];
+        let imageBound = [[minY , minX] , [maxY , maxX]];
         try{
             this.rainfallMap.removeLayer(this.rainfallPngLayer);
         }catch(e){
@@ -70,15 +75,16 @@ class MapControl {
     }
 
     addFloodPNG(imageUrl , maxX , maxY , minX , minY){
-        let imageBound = [[minX , minY] , [maxX , maxY]];
+        let imageBound = [[minY , minX] , [maxY , maxX]];
         try{
             this.floodMap.removeLayer(this.floodPngLayer);
         }catch(e){
         }
         this.floodPngLayer = new L.imageOverlay(imageUrl , imageBound);
         this.floodPngLayer.addTo(this.floodMap);
-        this.rainfallMap.flyToBounds(imageBound);
     }
+
+
 
 
     /*
