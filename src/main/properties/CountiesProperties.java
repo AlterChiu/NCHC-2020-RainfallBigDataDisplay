@@ -1,12 +1,18 @@
 
 package main.properties;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import usualTool.AtFileReader;
 
 
@@ -27,36 +33,39 @@ public class CountiesProperties {
 	}
 
 	@Bean
-	public void initialCoutiesMap() {
+	public void initialCoutiesMap() throws JsonIOException, JsonSyntaxException, FileNotFoundException, IOException {
 		this.coutiesMap = new LinkedHashMap<>();
-		String[][] couties = null;
 
-		try {
+		// read counties file
+		JsonArray coutiesArray = new AtFileReader(this.globalProperty.getCountyPropertiesAdd()).getJson()
+				.getAsJsonArray();
 
-			// read counties file
-			couties = new AtFileReader(this.globalProperty.getCountyPropertiesAdd()).getCsv(1, 0);
+		// counties = {Chinese , English}
+		for (JsonElement countyElement : coutiesArray) {
+			JsonObject countyObject = countyElement.getAsJsonObject();
 
-			// counties = {Chinese , English}
-			for (String county[] : couties) {
-				// key in English
-				CountryProperty temptProperties = new CountryProperty();
-				temptProperties.setID(county[1]);
-				temptProperties.setName(county[0]);
-				temptProperties.setX(Double.parseDouble(county[2]));
-				temptProperties.setY(Double.parseDouble(county[3]));
-				temptProperties.setZoom(Integer.parseInt(county[4]));
+			// key in English
+			CountryProperty temptProperties = new CountryProperty();
+			temptProperties.setID(countyObject.get("id").getAsString());
+			temptProperties.setName(countyObject.get("name").getAsString());
+			temptProperties.setAmount(countyObject.get("amount").getAsInt());
+			temptProperties.setJson(countyObject);
 
-				temptProperties.setMaxX(Double.parseDouble(county[5]));
-				temptProperties.setMaxY(Double.parseDouble(county[6]));
-				temptProperties.setMinX(Double.parseDouble(county[7]));
-				temptProperties.setMinY(Double.parseDouble(county[8]));
+			// rainfall
+			JsonObject floodObject = countyObject.get("flood").getAsJsonObject();
+			temptProperties.setFloodMaxX(floodObject.get("maxX").getAsDouble());
+			temptProperties.setFloodMaxY(floodObject.get("maxY").getAsDouble());
+			temptProperties.setFloodMinX(floodObject.get("minX").getAsDouble());
+			temptProperties.setFloodMinY(floodObject.get("minY").getAsDouble());
 
-				this.coutiesMap.put(temptProperties.getID(), temptProperties);
-			}
+			// flood
+			JsonObject rainfallObject = countyObject.get("rainfall").getAsJsonObject();
+			temptProperties.setRainfallMaxX(rainfallObject.get("maxX").getAsDouble());
+			temptProperties.setRainfallMaxY(rainfallObject.get("maxY").getAsDouble());
+			temptProperties.setRainfallMinX(rainfallObject.get("minX").getAsDouble());
+			temptProperties.setRainfallMinY(rainfallObject.get("minY").getAsDouble());
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.coutiesMap.put(temptProperties.getID(), temptProperties);
 		}
 	}
 
@@ -64,14 +73,18 @@ public class CountiesProperties {
 
 		private String id;
 		private String name;
-		private double wgs84_X;
-		private double wgs84_Y;
-		private int zoom;
+		private int amount;
+		private JsonObject countyObject;
 
-		private double maxX;
-		private double maxY;
-		private double minX;
-		private double minY;
+		private double floodMaxX;
+		private double floodMaxY;
+		private double floodMinX;
+		private double floodMinY;
+
+		private double rainfallMaxX;
+		private double rainfallMaxY;
+		private double rainfallMinX;
+		private double rainfallMinY;
 
 		public void setID(String id) {
 			this.id = id;
@@ -89,85 +102,86 @@ public class CountiesProperties {
 			return this.name;
 		}
 
-		public void setX(double x) {
-			try {
-				if (x >= 180 || x <= -180) {
-					this.wgs84_X = 121;
-				} else {
-					this.wgs84_X = x;
-				}
-			} catch (Exception e) {
-				this.wgs84_X = 121;
-			}
+		public void setJson(JsonObject json) {
+			this.countyObject = json;
 		}
 
-		public double getX() {
-			return this.wgs84_X;
+		public JsonObject getJson() {
+			return this.countyObject;
 		}
 
-		public void setY(double y) {
-			try {
-				if (y >= 90 || y < -90) {
-					this.wgs84_Y = 23.6;
-				} else {
-					this.wgs84_Y = y;
-				}
-			} catch (Exception e) {
-				this.wgs84_Y = 23.6;
-			}
+		public void setAmount(int amount) {
+			this.amount = amount;
 		}
 
-		public double getY() {
-			return this.wgs84_Y;
+		public int getAmount() {
+			return this.amount;
 		}
 
-		public void setZoom(int z) {
-			try {
-				if (z < 1 || z > 18) {
-					this.zoom = 7;
-				} else {
-					this.zoom = z;
-				}
-			} catch (Exception e) {
-				this.zoom = 7;
-			}
+		public void setFloodMaxX(double maxX) {
+			this.floodMaxX = maxX;
 		}
 
-		public int getZoom() {
-			return this.zoom;
+		public double getFloodMaxX() {
+			return this.floodMaxX;
 		}
 
-		public void setMaxX(double maxX) {
-			this.maxX = maxX;
+		public void setFloodMaxY(double maxY) {
+			this.floodMaxY = maxY;
+		}
+
+		public double getFloodMaxY() {
+			return this.floodMaxY;
+		}
+
+		public void setFloodMinX(double minX) {
+			this.floodMinX = minX;
+		}
+
+		public double getFloodMinX() {
+			return this.floodMinX;
+		}
+
+		public void setFloodMinY(double minY) {
+			this.floodMinY = minY;
+		}
+
+		public double getFloodMinY() {
+			return this.floodMinY;
+		}
+
+		public void setRainfallMaxX(double maxX) {
+			this.rainfallMaxX = maxX;
 		}
 
 		public double getMaxX() {
-			return this.maxX;
+			return this.rainfallMaxX;
 		}
 
-		public void setMaxY(double maxY) {
-			this.maxY = maxY;
+		public void setRainfallMaxY(double maxY) {
+			this.rainfallMaxY = maxY;
 		}
 
 		public double getMaxY() {
-			return this.maxY;
+			return this.rainfallMaxY;
 		}
 
-		public void setMinX(double minX) {
-			this.minX = minX;
+		public void setRainfallMinX(double minX) {
+			this.rainfallMinX = minX;
 		}
 
 		public double getMinX() {
-			return this.minX;
+			return this.rainfallMinX;
 		}
 
-		public void setMinY(double minY) {
-			this.minY = minY;
+		public void setRainfallMinY(double minY) {
+			this.rainfallMinY = minY;
 		}
 
 		public double getMinY() {
-			return this.minY;
+			return this.rainfallMinY;
 		}
+
 	}
 
 

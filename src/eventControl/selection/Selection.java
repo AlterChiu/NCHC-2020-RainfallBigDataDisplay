@@ -22,29 +22,13 @@ public class Selection {
 
 		try {
 			CountryProperty properties = this.countiesProperties.getCoutiesMap().get(county);
-
-			outJson.addProperty("id", properties.getID());
-			outJson.addProperty("name", properties.getName());
-			outJson.addProperty("centerX", properties.getX());
-			outJson.addProperty("centerY", properties.getY());
-			outJson.addProperty("zoom", properties.getZoom());
-			outJson.addProperty("maxX", properties.getMaxX());
-			outJson.addProperty("maxY", properties.getMaxY());
-			outJson.addProperty("minX", properties.getMinX());
-			outJson.addProperty("minY", properties.getMinY());
+			outJson = properties.getJson();
 		} catch (Exception e) {
 
 			outJson.addProperty("id", "noCounty");
 			outJson.addProperty("name", "noCounty");
-			outJson.addProperty("centerX", 121);
-			outJson.addProperty("centerY", 23.6);
-			outJson.addProperty("zoom", 7);
-			outJson.addProperty("maxX", 0);
-			outJson.addProperty("maxY", 0);
-			outJson.addProperty("minX", 0);
-			outJson.addProperty("minY", 0);
+
 		}
 		return outJson;
-
 	}
 }

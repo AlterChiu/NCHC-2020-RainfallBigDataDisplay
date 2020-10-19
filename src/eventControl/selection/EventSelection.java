@@ -43,7 +43,7 @@ public class EventSelection {
 			// get filePath
 			StringBuilder eventFolderPath = new StringBuilder();
 			eventFolderPath.append(this.globalProperty.getDataRoot() + "\\");
-			eventFolderPath.append(county + "\\");
+			eventFolderPath.append(county + "\\data\\");
 			eventFolderPath.append(duration + "\\");
 			eventFolderPath.append(depth + "\\");
 			eventFolderPath.append(intensity + "\\");

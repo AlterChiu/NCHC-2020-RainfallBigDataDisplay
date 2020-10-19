@@ -3,26 +3,32 @@ class MapControl {
     static mapControl;
 
 
-    constructor(){
-        this.rainfallMap = L.map("rainfallMap").setView([23.6,121],7);
-        this.ainfallPngLayer = "";
-    
-        this.floodMap = L.map("floodMap").setView([23.6,121],7);
-        this.floodPngLayer = "";
+    constructor() {
+        this.rainfallMap = L.map("rainfallMap").setView([23.6, 121], 7);
+        this.rainfallPngLayer = [];
+
+        this.floodMap = L.map("floodMap").setView([23.6, 121], 7);
+        this.floodPngLayer = [];
     }
 
 
-    setViewRainfallMap(maxX , maxY , minX , minY){
-        let imageBound = [[minY , minX] , [maxY , maxX]];
-        this.rainfallMap.fitBounds(imageBound , {
-            animate : false
+    setViewRainfallMap(maxX, maxY, minX, minY) {
+        let imageBound = [
+            [minY, minX],
+            [maxY, maxX]
+        ];
+        this.rainfallMap.fitBounds(imageBound, {
+            animate: false
         });
     }
 
-    setViewFloodMap(maxX , maxY , minX , minY){
-        let imageBound = [[minY , minX] , [maxY , maxX]];
-        this.floodMap.fitBounds(imageBound , {
-            animate : false
+    setViewFloodMap(maxX, maxY, minX, minY) {
+        let imageBound = [
+            [minY, minX],
+            [maxY, maxX]
+        ];
+        this.floodMap.fitBounds(imageBound, {
+            animate: false
         });
     }
 
@@ -64,24 +70,38 @@ class MapControl {
     /*
         set image
     */
-    addRainfallPNG(imageUrl , maxX , maxY , minX , minY){
-        let imageBound = [[minY , minX] , [maxY , maxX]];
-        try{
-            this.rainfallMap.removeLayer(this.rainfallPngLayer);
-        }catch(e){
-        }
-        this.rainfallPngLayer = new L.imageOverlay( imageUrl , imageBound);
+    addRainfallPNG(imageUrl, maxX, maxY, minX, minY) {
+        let imageBound = [
+            [minY, minX],
+            [maxY, maxX]
+        ];
+        var oldLayer = this.rainfallPngLayer;
+
+        this.rainfallPngLayer = new L.imageOverlay(imageUrl, imageBound);
         this.rainfallPngLayer.addTo(this.rainfallMap);
+
+        this.removeLayer(oldLayer, this.rainfallMap);
     }
 
-    addFloodPNG(imageUrl , maxX , maxY , minX , minY){
-        let imageBound = [[minY , minX] , [maxY , maxX]];
-        try{
-            this.floodMap.removeLayer(this.floodPngLayer);
-        }catch(e){
-        }
-        this.floodPngLayer = new L.imageOverlay(imageUrl , imageBound);
+    addFloodPNG(imageUrl, maxX, maxY, minX, minY) {
+        let imageBound = [
+            [minY, minX],
+            [maxY, maxX]
+        ];
+        var oldLayer = this.floodPngLayer;
+
+        this.floodPngLayer = new L.imageOverlay(imageUrl, imageBound);
         this.floodPngLayer.addTo(this.floodMap);
+
+        this.removeLayer(oldLayer, this.floodMap);
+    }
+
+    removeLayer(layer, map) {
+        try {
+            setTimeout(function () {
+                map.removeLayer(layer);
+            }, 500)
+        } catch (e) {}
     }
 
 
@@ -103,7 +123,7 @@ class MapControl {
 
 MapControl.mapControl = new MapControl();
 
-var initialMap = function() {
+var initialMap = function () {
     // initial the map
     MapControl.mapControl.initialMap(MapControl.mapControl.floodMap);
     MapControl.mapControl.initialMap(MapControl.mapControl.rainfallMap);

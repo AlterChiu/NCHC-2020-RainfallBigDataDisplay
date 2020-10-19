@@ -39,14 +39,12 @@ public class PngSelection {
 
 			// get filePath
 			StringBuilder eventFolderPath = new StringBuilder();
-			eventFolderPath.append(county + "\\");
+			eventFolderPath.append(county + "\\data\\");
 			eventFolderPath.append(duration + "\\");
 			eventFolderPath.append(depth + "\\");
 			eventFolderPath.append(intensity + "\\");
 			eventFolderPath.append(pattern + "\\");
 			eventFolderPath.append(EventID + "\\");
-
-//			eventFolderPath.append(".\\" + this.globalProperty.getPngDataRoot() + "\\");
 
 			String dataEventFolder = this.globalProperty.getDataRoot() + "\\" + eventFolderPath.toString();
 			String pngLinkUrl = "..\\" + this.globalProperty.getPngDataRoot() + "\\";
@@ -57,9 +55,9 @@ public class PngSelection {
 			JsonArray pngArray = new JsonArray();
 
 			// get image url
-			for (int timeStep = 0; timeStep < new File(dataEventFolder).list().length / 2; timeStep++) {
-				String rainfallImage = pngLinkUrl + eventFolderPath.toString() + timeStep + "_rainfall.png";
-				String floodImage = pngLinkUrl + eventFolderPath.toString() + timeStep + "_flood.png";
+			for (int timeStep = 0; timeStep < new File(dataEventFolder + "\\rainfall\\").list().length; timeStep++) {
+				String rainfallImage = pngLinkUrl + eventFolderPath.toString() + "rainfall\\" + timeStep + ".png";
+				String floodImage = pngLinkUrl + eventFolderPath.toString() + "flood\\" + timeStep + ".png";
 
 				JsonObject temptObject = new JsonObject();
 				temptObject.addProperty("rainfallUrl", rainfallImage);

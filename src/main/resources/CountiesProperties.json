@@ -1,0 +1,36 @@
+[
+  {
+    "name": "宜蘭市",
+    "id": "Yilan",
+    "amount": 1,
+    "flood": {
+      "maxX": 121.862922266,
+      "maxY": 24.8707524752,
+      "minX": 121.631247855,
+      "minY": 24.5674140447
+    },
+    "rainfall": {
+      "maxX": 122.0,
+      "maxY": 25.0,
+      "minX": 121.3,
+      "minY": 24.2125
+    }
+  },
+    {
+    "name": "台南三爺",
+    "id": "TainanSY",
+    "amount": 1,
+    "flood": {
+      "maxX": 121,
+      "maxY": 23.6,
+      "minX": 120,
+      "minY": 22.6
+    },
+    "rainfall": {
+      "maxX": 121,
+      "maxY": 23.6,
+      "minX": 120,
+      "minY": 22.6
+    }
+  }
+]

@@ -41,17 +41,23 @@ class TimeLineTimer {
 
     static timeLineTimer;
     constructor() {
-    /*
+        /*
 	 pngProperties = {
         id : county(EN),
         name : county(CH),
-        centerX: wgs84X,
-        centerY : wgs84Y,
-        zoom : zoom,
-        maxX : pngBoundMaxX,
-        maxY : pngBoundMaxY,
-        minX : pngBoundMinX,
-        minY : pngBoundMinY,
+        amount : eventAmount,
+        flood : {
+            maxX : pngBoundMaxX,
+            maxY : pngBoundMaxY,
+            minX : pngBoundMinX,
+            minY : pngBoundMinY,
+        },
+        rainfall : {
+            maxX : pngBoundMaxX,
+            maxY : pngBoundMaxY,
+            minX : pngBoundMinX,
+            minY : pngBoundMinY,
+        }
 
         pngUrl:[
             {
@@ -65,11 +71,11 @@ class TimeLineTimer {
         this.timeStepDelay = 500; // millisecond
     }
 
-    setPngProperties(properties){
+    setPngProperties(properties) {
         this.pngProperties = properties;
     }
 
-    getPngProperties(){
+    getPngProperties() {
         return this.pngProperties;
     }
 
@@ -78,21 +84,22 @@ class TimeLineTimer {
     run(startTime, endTime) {
         this.pause();
 
-        // disable the map control
-        MapControl.mapControl.disableDragging();
-        this.timers.push(setTimeout(() => {
-            MapControl.mapControl.enableDragging();
-        }, this.timeStepDelay * (endTime - startTime)));
+        // // disable the map control
+        // MapControl.mapControl.disableDragging();
+        // this.timers.push(setTimeout(() => {
+        //     MapControl.mapControl.enableDragging();
+        // }, this.timeStepDelay * (endTime - startTime)));
 
         for (let index = 0; index <= (endTime - startTime); index++) {
             this.timers.push(setTimeout(function () {
                 $("#timeLine").val(index + startTime);
+                $('#timeLine').trigger('change');
             }, this.timeStepDelay * index))
         }
 
         this.timers.push(setTimeout(function () {
-            this.stop();
-        }, this.timeStepDelay * (endTime - startTime +2)))
+            $("#stop-button").trigger("click");
+        }, this.timeStepDelay * (endTime - startTime + 2)))
     }
 
     pause() {
@@ -103,30 +110,38 @@ class TimeLineTimer {
     stop() {
         this.pause();
         $("#timeLine").val(1);
+        $("#timeLine").trigger("change")
     }
 
     reSet() {
         this.stop();
-        MapControl.mapControl.setViewRainfallMap(this.pngProperties.maxX, this.pngProperties.maxY, this.pngProperties.minX , this.pngProperties.minY);
+        MapControl.mapControl.setViewRainfallMap(this.pngProperties.maxX, this.pngProperties.maxY, this.pngProperties.minX, this.pngProperties.minY);
         // MapControl.mapControl.setViewRainfallMap(this.pngProperties.centerX, this.pngProperties.centerY, TimeLineTimer.pngProperties.zoom);
     }
 
-    loadPNG(){
+    loadPNG() {
         MapControl.mapControl.disableDragging();
-        var currentTimeStep = $("#timeLine").val() -1 ;
-        try{
-            var rainfallUrl  = this.pngProperties["pngUrl"][currentTimeStep].rainfallUrl;
-            var floodUrl = this.pngProperties["pngUrl"][currentTimeStep].floodUrl;
-    
-            var maxX = this.pngProperties.maxX;
-            var maxY = this.pngProperties.maxY;
-            var minX = this.pngProperties.minX;
-            var minY = this.pngProperties.minY;
-    
-            MapControl.mapControl.addRainfallPNG(rainfallUrl , maxX , maxY , minX , minY);
-            MapControl.mapControl.addFloodPNG(floodUrl , maxX , maxY , minX , minY);
-        }catch(e){
-        }
+        var currentTimeStep = $("#timeLine").val() - 1;
+
+        // load rainfall png
+
+        var rainfallUrl = this.pngProperties["pngUrl"][currentTimeStep].rainfallUrl;
+        var maxX = this.pngProperties.rainfall.maxX;
+        var maxY = this.pngProperties.rainfall.maxY;
+        var minX = this.pngProperties.rainfall.minX;
+        var minY = this.pngProperties.rainfall.minY;
+
+        MapControl.mapControl.addRainfallPNG(rainfallUrl, maxX, maxY, minX, minY);
+
+        // load flood png
+
+        var floodUrl = this.pngProperties["pngUrl"][currentTimeStep].floodUrl;
+        var maxX = this.pngProperties.flood.maxX;
+        var maxY = this.pngProperties.flood.maxY;
+        var minX = this.pngProperties.flood.minX;
+        var minY = this.pngProperties.flood.minY;
+
+        MapControl.mapControl.addFloodPNG(floodUrl, maxX, maxY, minX, minY);
 
         MapControl.mapControl.enableDragging();
     }
@@ -185,4 +200,8 @@ $("#stop-button").on("click", function () {
 // <++++++++++++++++++++++++++++++++++++++++++++++++++++>
 $("#timeLine").on("change", function () {
     TimeLineTimer.timeLineTimer.loadPNG();
+})
+
+$("#timeLine").on("click", function () {
+    $("#pause-button").trigger("click");
 })

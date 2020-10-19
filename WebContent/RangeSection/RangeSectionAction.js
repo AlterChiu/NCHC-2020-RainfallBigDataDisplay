@@ -121,24 +121,40 @@ function initialCounties() {
 
             var countriesList = [];
             var countriesValueList = [];
+            var countriesAmount = [];
             $.each(RangeSectionAction.rangeSectionAction.getCountryProperties(), function (key, value) {
                 countriesList.push(value["name"]);
+                countriesAmount.push(value["amount"]);
                 countriesValueList.push(key);
             })
-            $("#county-value").append(getMultiColumnRangeSelectionContent(countriesList, countriesValueList, countyColNum));
-            $("#county-value").find("." + normalClass).first().addClass(selectedClass);
 
+            // setting initial country title with values
+            $("#county-value").append(getMultiColumnRangeSelectionContent(countriesList, countriesValueList, countyColNum));
+            
+            // setting county amount 
+            $("#county-value").find("." + normalClass).each(function(index){
+                $(this).attr("data-amount" , countriesAmount[index]);
+            });
+
+
+            // setting first trigger
+            $("#county-value").find("." + normalClass).first().addClass(selectedClass);
             initialRangeStyleChangeOnClick();
             reloadResultBox();
 
-            // setting county title
+            // setting county subtitle and each counties onClick
             $.each($("#county-value").find("." + normalClass) , function(){
                 $(this).click(function(){
                     $("#countyTitle").empty();
-                    $("#countyTitle").append($(this).text());
+
+                    var titleContent="";
+                    titleContent += "<span>" + $(this).text() + "</span>";
+                    titleContent += "<span class=\"range-selection-en\">(" + $(this).data("amount") + ")</span>";
+
+                    $("#countyTitle").append(titleContent);
                     $("#countyTitle").trigger("click");
                 });
-            });
+            });            
             $("#county-value").find("." + normalClass).first().trigger("click");
         },
     });
@@ -277,8 +293,7 @@ var getEventPngList = function (event) {
                 $("#timeLine").attr("max", data["pngUrl"].length);
 
                 // set map to county center
-                MapControl.mapControl.setViewFloodMap(data.maxX, data.maxY, data.minX , data.minY);
-                // MapControl.mapControl.setViewRainfallMap(data.centerX, data.centerY, data.zoom);
+                MapControl.mapControl.setViewFloodMap(data.flood.maxX, data.flood.maxY, data.flood.minX , data.flood.minY);
 
                 // load first png
                 TimeLineTimer.timeLineTimer.loadPNG();
