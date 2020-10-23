@@ -48,6 +48,13 @@ class MapControl {
             zoomOffset: -1
         }).addTo(map);
 
+        var outdoorLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA', {
+            maxZoom: 18,
+            id: 'mapbox/outdoors-v11',
+            tileSize: 512,
+            zoomOffset: -1
+        }).addTo(map);
+
         var satelliteLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
             maxZoom: 18,
             id: 'mapbox/satellite-streets-v11',
@@ -56,12 +63,17 @@ class MapControl {
         }).addTo(map);
 
 
+
+
+
+
         /*
             setting controler 
          */
         var layers = {
-            "Street": streetLayer,
-            "Satellite": satelliteLayer
+            "Satellite": satelliteLayer,
+            "Outdoor": outdoorLayer,
+            "Street": streetLayer
         };
 
         L.control.layers(layers).addTo(map);

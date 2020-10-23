@@ -1,0 +1,12 @@
+.scalePNG{
+    max-width: 100%;
+    height: auto;
+    float:left;
+}
+
+.scaleText{
+    text-align: left;
+    line-height: normal;
+    font-family: 'Times New Roman', "Microsoft JhengHei";
+    font-size : auto;
+}

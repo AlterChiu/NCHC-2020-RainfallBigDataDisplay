@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./TimeControlSection/TimeControl.css" type="text/css">
   <link rel="stylesheet" href="./MapControl/MapControl.css" type="text/css">
   <link rel="stylesheet" href="./loadingPage.css" type="text/css">
+  <link rel="stylesheet" href="./mainpage/mainpage.css" type="text/css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
@@ -54,7 +55,7 @@
     </div>
   </div>
   <div class="py-2">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <div class="col-md-6 col-lg-3 pl-3" style="background-color:gray">留白</div>
         <div class="col-md-6 col-lg-9 pl-3">
@@ -89,7 +90,7 @@
                 <div class="subtitleShape"></div>
                 <div class="mb-0 range-selection-button"> 
                   <span>降雨延時</span>
-                  <span class="range-selection-en">(Rainfall duration, hr)</span>
+                  <span class="range-selection-en">(duration, hr)</span>
                 </div>
               </div>
               <div id="rainfallDuration-data">
@@ -114,7 +115,7 @@
                 <div class="subtitleShape"></div>
                 <div class="mb-0 range-selection-button">
                   <span>降雨量</span>
-                  <span class="range-selection-en">(Rainfall Accumulation, mm)</span>
+                  <span class="range-selection-en">(accumulation, mm)</span>
                 </div>
               </div>
               <div id="rainfallDepth-data">
@@ -139,7 +140,7 @@
                 <div class="subtitleShape"></div>
                 <div class="mb-0 range-selection-button">
                   <span>最大降雨</span>
-                  <span class="range-selection-en">(Rainfall Intensive, mm/hr)</span>
+                  <span class="range-selection-en">(intensive, mm/hr)</span>
                 </div>
               </div>
               <div id="rainfallIntensity-data">
@@ -164,7 +165,7 @@
                 <div class="subtitleShape"></div>
                 <div class="mb-0 range-selection-button">
                   <span>雨型</span>
-                  <span class="range-selection-en">(Rainfall Pattern)</span>
+                  <span class="range-selection-en">(pattern)</span>
                 </div>
               </div>
               <div id="rainfallPattern-data">
@@ -206,8 +207,13 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12 col-large-12">
-                  <h5 class="">淹水Scale</h5>
+                <div class="col-md-12 col-large-12 pl-3">
+                  <span>
+                    <div class="scaleText">淹水Scale</div>
+                  </span>
+                  <span>
+                    <img class="scalePNG" src="./mainpage/floodScale.png"/>
+                  </span>
                 </div>
               </div>
             </div>
@@ -218,10 +224,13 @@
                   <div id="rainfallMap" class="map"></div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12 col-large-12">
-                  <h5 class="">雨量Scale</h5>
-                </div>
+              <div class="row pl-4">
+                <span>
+                  <div class="scaleText">雨量Scale</div>
+                </span>
+                <span>
+                  <img class="scalePNG" src="./mainpage/rainfallScale.png"/>
+                </span>
               </div>
             </div>
           </div>

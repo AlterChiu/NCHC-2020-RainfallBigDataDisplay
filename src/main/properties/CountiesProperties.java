@@ -1,10 +1,15 @@
 
 package main.properties;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +27,9 @@ public class CountiesProperties {
 	@Autowired
 	private InitialProperties globalProperty;
 
+	@Autowired
+	private EventProperties eventProperties;
+
 	/*
 	 * setting counties to show
 	 */
@@ -31,6 +39,10 @@ public class CountiesProperties {
 	public Map<String, CountryProperty> getCoutiesMap() {
 		return this.coutiesMap;
 	}
+
+
+
+
 
 	@Bean
 	public void initialCoutiesMap() throws JsonIOException, JsonSyntaxException, FileNotFoundException, IOException {
@@ -65,7 +77,67 @@ public class CountiesProperties {
 			temptProperties.setRainfallMinX(rainfallObject.get("minX").getAsDouble());
 			temptProperties.setRainfallMinY(rainfallObject.get("minY").getAsDouble());
 
+
+			// get country event configFile
+			String configFile = "";
+			for (String fileName : new File(this.globalProperty.getDataRoot()).list()) {
+				if (fileName.toLowerCase().contains("metadata.csv")) {
+					configFile = this.globalProperty.getDataRoot() + fileName;
+					break;
+				}
+			}
+
+			// set country events
+			try {
+				setCountyEvent(configFile, temptProperties);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 			this.coutiesMap.put(temptProperties.getID(), temptProperties);
+		}
+	}
+
+	private void setCountyEvent(String configFilePath, CountryProperty temptCounty) throws IOException {
+		// set event
+		String configContent[][] = new AtFileReader(configFilePath).getCsv(1, 0);
+
+		for (String[] temptLine : configContent) {
+			try {
+				String eventID = temptLine[0].split("_")[0] + temptLine[0].split("_")[1];
+				double duration = Double.parseDouble(temptLine[1]);
+				double intensive = Double.parseDouble(temptLine[2]);
+				double accumulation = Double.parseDouble(temptLine[6]);
+				int pattern = Integer.parseInt(temptLine[7]);
+
+				// formatting key
+				String durationKey = this.eventProperties.getDurationKeys()
+						.get(Optional.ofNullable(this.eventProperties.getDurationKeys().lowerKey(duration))
+								.orElse(this.eventProperties.getDurationKeys().firstKey()));
+
+				String intensiveKey = this.eventProperties.getIntensiveKeys()
+						.get(Optional.ofNullable(this.eventProperties.getIntensiveKeys().lowerKey(intensive))
+								.orElse(this.eventProperties.getIntensiveKeys().firstKey()));
+
+
+				String accumulationKey = this.eventProperties.getAccumulationKeys()
+						.get(Optional.ofNullable(this.eventProperties.getAccumulationKeys().lowerKey(accumulation))
+								.orElse(this.eventProperties.getAccumulationKeys().firstKey()));
+
+				String patternKey;
+				if (this.eventProperties.getPatternKeys().containsKey(pattern)) {
+					patternKey = String.valueOf(pattern);
+				} else {
+					patternKey = String.valueOf(0);
+				}
+
+				// add to country properties
+				temptCounty.addEvent(eventID, durationKey, intensiveKey, accumulationKey, patternKey);
+
+			} catch (Exception e) {
+				System.out
+						.println("*WARN* unable to parse event property, " + temptCounty.getID() + "_" + temptLine[0]);
+			}
 		}
 	}
 
@@ -85,6 +157,9 @@ public class CountiesProperties {
 		private double rainfallMaxY;
 		private double rainfallMinX;
 		private double rainfallMinY;
+
+		private Map<String, List<String>> eventMapping = new HashMap<>();
+
 
 		public void setID(String id) {
 			this.id = id;
@@ -182,7 +257,33 @@ public class CountiesProperties {
 			return this.rainfallMinY;
 		}
 
+		public void addEvent(String eventID, String duration, String intensive, String accumulation, String pattern) {
+			StringBuilder eventKey = new StringBuilder();
+			eventKey.append(duration + "_");
+			eventKey.append(intensive + "_");
+			eventKey.append(accumulation + "_");
+			eventKey.append(pattern);
+
+			Optional.ofNullable(this.eventMapping.get(eventKey.toString())).ifPresentOrElse(e -> {
+				this.eventMapping.get(eventKey.toString()).add(eventID);
+			}, () -> {
+				List<String> temptList = new ArrayList<>();
+				temptList.add(eventID);
+				this.eventMapping.put(eventKey.toString(), temptList);
+			});
+		}
+
+		public Map<String, List<String>> getEventMap() {
+			return this.eventMapping;
+		}
 	}
-
-
 }
+
+
+
+
+
+
+
+
+
