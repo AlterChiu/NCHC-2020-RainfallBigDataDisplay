@@ -2,7 +2,6 @@
 package main.properties;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,15 +12,15 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import usualTool.AtFileReader;
 
 
 @Configuration
+@DependsOn({ "initialEventSelectionGap" })
 public class CountiesProperties {
 
 	@Autowired
@@ -45,7 +44,7 @@ public class CountiesProperties {
 
 
 	@Bean
-	public void initialCoutiesMap() throws JsonIOException, JsonSyntaxException, FileNotFoundException, IOException {
+	public void initialCoutiesMap() throws Exception {
 		this.coutiesMap = new LinkedHashMap<>();
 
 		// read counties file
@@ -79,10 +78,11 @@ public class CountiesProperties {
 
 
 			// get country event configFile
+			String countryDataRoot = this.globalProperty.getDataRoot() + "\\" + countyObject.get("id").getAsString();
 			String configFile = "";
-			for (String fileName : new File(this.globalProperty.getDataRoot()).list()) {
+			for (String fileName : new File(countryDataRoot).list()) {
 				if (fileName.toLowerCase().contains("metadata.csv")) {
-					configFile = this.globalProperty.getDataRoot() + fileName;
+					configFile = countryDataRoot + "\\" + fileName;
 					break;
 				}
 			}
@@ -92,6 +92,8 @@ public class CountiesProperties {
 				setCountyEvent(configFile, temptProperties);
 			} catch (Exception e) {
 				e.printStackTrace();
+				throw new Exception(
+						"*ERROR* missing country event metedata.csv, " + countyObject.get("id").getAsString());
 			}
 
 			this.coutiesMap.put(temptProperties.getID(), temptProperties);
@@ -104,11 +106,11 @@ public class CountiesProperties {
 
 		for (String[] temptLine : configContent) {
 			try {
-				String eventID = temptLine[0].split("_")[0] + temptLine[0].split("_")[1];
+				String eventID = String.format("%d", Integer.parseInt(temptLine[0].split("_")[1]));
 				double duration = Double.parseDouble(temptLine[1]);
 				double intensive = Double.parseDouble(temptLine[2]);
-				double accumulation = Double.parseDouble(temptLine[6]);
-				int pattern = Integer.parseInt(temptLine[7]);
+				double accumulation = Double.parseDouble(temptLine[5]);
+				int pattern = Integer.parseInt(temptLine[6]);
 
 				// formatting key
 				String durationKey = this.eventProperties.getDurationKeys()
@@ -135,6 +137,7 @@ public class CountiesProperties {
 				temptCounty.addEvent(eventID, durationKey, intensiveKey, accumulationKey, patternKey);
 
 			} catch (Exception e) {
+				e.printStackTrace();
 				System.out
 						.println("*WARN* unable to parse event property, " + temptCounty.getID() + "_" + temptLine[0]);
 			}

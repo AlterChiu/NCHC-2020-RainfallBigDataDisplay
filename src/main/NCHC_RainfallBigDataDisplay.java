@@ -7,10 +7,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 
 
 @SpringBootApplication
 @ConfigurationProperties
+@PropertySource(value = { "classpath:initailSetting.properties" }, ignoreResourceNotFound = true, encoding = "UTF-8")
+
 @ComponentScan(basePackages = "eventControl")
 @ComponentScan(basePackages = "main.properties")
 public class NCHC_RainfallBigDataDisplay extends SpringBootServletInitializer {

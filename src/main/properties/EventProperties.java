@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import usualTool.AtCommonMath;
 
 @Configuration
 public class EventProperties {
@@ -22,7 +23,7 @@ public class EventProperties {
 	private Map<Integer, String> patternKeys;
 
 
-	@Bean
+	@Bean("initialEventSelectionGap")
 	public void initialEventSelectionGap() throws Exception {
 		this.durationKeys = new TreeMap<>();
 		String[] durations = this.globalProperty.getEventDuaration().split(",");
@@ -30,10 +31,11 @@ public class EventProperties {
 		try {
 			for (int index = 0; index < 4; index++) {
 				double temptDuration = Double.parseDouble(durations[index]);
-				this.durationKeys.put(temptDuration, String.format("%d", temptDuration));
+				this.durationKeys.put(temptDuration, AtCommonMath.getDecimal_String(temptDuration, 0));
 			}
 		} catch (Exception e) {
-			throw new Exception("*ERROR* unable to parse duration");
+			e.printStackTrace();
+			throw new Exception("*ERROR* unable to parse duration, " + String.join(",", durations));
 		}
 
 		// =================================================
@@ -44,7 +46,7 @@ public class EventProperties {
 		try {
 			for (int index = 0; index < 4; index++) {
 				double temptIntensive = Double.parseDouble(intensives[index]);
-				this.intensiveKeys.put(temptIntensive, String.format("%d", temptIntensive));
+				this.intensiveKeys.put(temptIntensive, AtCommonMath.getDecimal_String(temptIntensive, 0));
 			}
 		} catch (Exception e) {
 			throw new Exception("*ERROR* unable to parse intensive");
@@ -58,7 +60,7 @@ public class EventProperties {
 		try {
 			for (int index = 0; index < 4; index++) {
 				double temptAccumulation = Double.parseDouble(accumulations[index]);
-				this.accumulationKeys.put(temptAccumulation, String.format("%d", temptAccumulation));
+				this.accumulationKeys.put(temptAccumulation, AtCommonMath.getDecimal_String(temptAccumulation, 0));
 			}
 		} catch (Exception e) {
 			throw new Exception("*ERROR* unable to parse accumulation");
@@ -67,11 +69,11 @@ public class EventProperties {
 		// =================================================
 
 		this.patternKeys = new HashMap<>();
-		String[] patterns = this.globalProperty.getEventAccumulation().split(",");
+		String[] patterns = this.globalProperty.getEventPattern().split(",");
 
 		try {
 			for (int index = 0; index < 4; index++) {
-				this.patternKeys.put(index, patterns[index]);
+				this.patternKeys.put(index + 1, patterns[index]);
 			}
 		} catch (Exception e) {
 			throw new Exception("*ERROR* unable to parse pattern");

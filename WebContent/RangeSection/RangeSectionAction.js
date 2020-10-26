@@ -99,12 +99,52 @@ var getMultiColumnRangeSelectionContent = function (idList, valueList, columnNum
 // <=====================Dynamic Action================================>
 // <+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++>
 
+
+const initialEventSelection = async()=>{
+    const selectionColNum = 4;
+
+    // get selections
+    $.ajax({
+        url: "./eventSelection/getEventProperties",
+        dataType: "json",
+        data: {},
+        success: function (data) {
+            let selectedClass = RangeSectionAction.rangeSectionAction.getSelectedClass();
+            let normalClass = RangeSectionAction.rangeSectionAction.getRangeClass();
+
+            var durationList = data.duration;
+            $("#rainfallDuration-value").append(getMultiColumnRangeSelectionContent(durationList , durationList , selectionColNum))
+            $("#rainfallDuration-value").find("." + normalClass).first().addClass(selectedClass);
+
+            var intensiveList = data.intensive;
+            $("#rainfallIntensity-value").append(getMultiColumnRangeSelectionContent(intensiveList , intensiveList , selectionColNum))
+            $("#rainfallIntensity-value").find("." + normalClass).first().addClass(selectedClass);
+
+            var accumulationList = data.accumulation;
+            $("#rainfallAccumulation-value").append(getMultiColumnRangeSelectionContent(accumulationList , accumulationList , selectionColNum))
+            $("#rainfallAccumulation-value").find("." + normalClass).first().addClass(selectedClass);
+
+            var patternName=[];
+            var patternValue=[];
+            $.each(data.pattern , function(key , value){
+                patternName.push(key);
+                patternValue.push(value);
+            });
+            $("#rainfallPattern-value").append(getMultiColumnRangeSelectionContent(patternName , patternValue , selectionColNum))
+            $("#rainfallPattern-value").find("." + normalClass).first().addClass(selectedClass);
+
+        }
+    });
+}
+
+
+
 /*
  * county-selection
  * 
  * initial county box
  */
-function initialCounties() {
+const initialCounties = async()=> {
     const countyColNum = 3;
 
     // get countiesList
@@ -159,8 +199,10 @@ function initialCounties() {
         },
     });
 
-}
-initialCounties();
+};
+
+// initial page
+initialEventSelection().then(initialCounties());
 
 
 
@@ -231,8 +273,8 @@ var reloadResultBox = function () {
         data: {
             county: $("#county-value").find("." + selectedClass).data("value"),
             duration: $("#rainfallDuration-value").find("." + selectedClass).data("value"),
-            depth: $("#rainfallDepth-value").find("." + selectedClass).data("value"),
-            intensity: $("#rainfallIntensity-value").find("." + selectedClass).data("value"),
+            accumulation: $("#rainfallAccumulation-value").find("." + selectedClass).data("value"),
+            intensitve: $("#rainfallIntensity-value").find("." + selectedClass).data("value"),
             pattern: $("#rainfallPattern-value").find("." + selectedClass).data("value")
         },
         success: function (eventArray) {
@@ -263,7 +305,11 @@ var getEventPngList = function (event) {
         $(".loadingPage").show();
 
         // trigger stop to initial time-control
-        $("#stop-button").trigger("click");
+        try {
+            $("#stop-button").trigger("click");
+        } catch (error) {
+        }
+       
 
         // get parent by class(.card-body)
         var parentCard = event.closest(".selection-result-box");
@@ -278,19 +324,17 @@ var getEventPngList = function (event) {
             dataType: "json",
             data: {
                 county: $("#county-value").find("." + selectedClass).data("value"),
-                duration: $("#rainfallDuration-value").find("." + selectedClass).data("value"),
-                depth: $("#rainfallDepth-value").find("." + selectedClass).data("value"),
-                intensity: $("#rainfallIntensity-value").find("." + selectedClass).data("value"),
-                pattern: $("#rainfallPattern-value").find("." + selectedClass).data("value"),
                 eventID: event.data("value")
             },
             success: function (data) {
-
+            
                 // setting pngList
                 TimeLineTimer.timeLineTimer.setPngProperties(data);
 
                 // set timeLine control
                 $("#timeLine").attr("max", data["pngUrl"].length);
+
+               
 
                 // set map to county center
                 MapControl.mapControl.setViewFloodMap(data.flood.maxX, data.flood.maxY, data.flood.minX , data.flood.minY);

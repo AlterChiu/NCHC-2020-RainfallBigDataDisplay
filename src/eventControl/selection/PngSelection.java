@@ -28,26 +28,19 @@ public class PngSelection {
 	 */
 	@GetMapping("/eventSelection/getPNG/getRainfallFlood")
 	public String getRainfallFloodPNG(@RequestParam(value = "county") String county,
-			@RequestParam(value = "duration") String duration, @RequestParam(value = "depth") String depth,
-			@RequestParam(value = "intensity") String intensity, @RequestParam(value = "pattern") String pattern,
-			@RequestParam(value = "eventID") String EventID) {
+			@RequestParam(value = "eventID") String eventID) {
 
 
 		if (!this.countiesProperties.getCoutiesMap().containsKey(county)) {
 			return "{id:\"no such county\"}";
 		} else {
 
-			// get filePath
-			StringBuilder eventFolderPath = new StringBuilder();
-			eventFolderPath.append(county + "\\data\\");
-			eventFolderPath.append(duration + "\\");
-			eventFolderPath.append(depth + "\\");
-			eventFolderPath.append(intensity + "\\");
-			eventFolderPath.append(pattern + "\\");
-			eventFolderPath.append(EventID + "\\");
+			eventID = "Event_" + String.format("%05d", Integer.parseInt(eventID));
+			String eventFolder = county + "\\data\\" + eventID + "\\";
 
-			String dataEventFolder = this.globalProperty.getDataRoot() + "\\" + eventFolderPath.toString();
-			String pngLinkUrl = "..\\" + this.globalProperty.getPngDataRoot() + "\\";
+
+			String dataEventFolder = this.globalProperty.getDataRoot() + "\\" + eventFolder;
+			String pngLinkUrl = "..\\" + this.globalProperty.getPngDataRoot() + "\\" + eventFolder;
 
 
 			// build return json
@@ -56,8 +49,8 @@ public class PngSelection {
 
 			// get image url
 			for (int timeStep = 0; timeStep < new File(dataEventFolder + "\\rainfall\\").list().length; timeStep++) {
-				String rainfallImage = pngLinkUrl + eventFolderPath.toString() + "rainfall\\" + timeStep + ".png";
-				String floodImage = pngLinkUrl + eventFolderPath.toString() + "flood\\" + timeStep + ".png";
+				String rainfallImage = pngLinkUrl + "rainfall\\" + timeStep + ".png";
+				String floodImage = pngLinkUrl + "flood\\" + timeStep + ".png";
 
 				JsonObject temptObject = new JsonObject();
 				temptObject.addProperty("rainfallUrl", rainfallImage);

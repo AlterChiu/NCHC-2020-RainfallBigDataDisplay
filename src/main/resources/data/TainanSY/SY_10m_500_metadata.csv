@@ -1,0 +1,4 @@
+FileName,Duration,Maximum Rainfall (per hour),Maximum accumulation Rainfall (per grid),Minimum accumulation Rainfall (per grid),Average accumulation Rainfall (all grid),TYPE
+Event_00001_Rainfall.nc,55,196,2105,49,662,4
+Event_00002_Rainfall.nc,82,127,3483,26,589,2
+Event_00003_Rainfall.nc,61,97,1904,10,541,1

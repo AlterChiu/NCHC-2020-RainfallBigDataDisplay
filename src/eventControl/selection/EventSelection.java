@@ -1,7 +1,9 @@
 
 package eventControl.selection;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,14 +13,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import main.properties.CountiesProperties;
 import main.properties.EventProperties;
-import main.properties.InitialProperties;
 
 @RestController
 @ComponentScan(basePackages = "main.properties")
 public class EventSelection {
 
-	@Autowired
-	private InitialProperties globalProperty;
 
 	@Autowired
 	private CountiesProperties countiesProperties;
@@ -34,8 +33,9 @@ public class EventSelection {
 	 */
 	@GetMapping("/eventSelection/getEvents")
 	public String getAllEvents(@RequestParam(value = "county") String county,
-			@RequestParam(value = "duration") String duration, @RequestParam(value = "depth") String depth,
-			@RequestParam(value = "intensity") String intensity, @RequestParam(value = "pattern") String pattern) {
+			@RequestParam(value = "duration") String duration,
+			@RequestParam(value = "accumulation") String accumulation,
+			@RequestParam(value = "intensitve") String intensitve, @RequestParam(value = "pattern") String pattern) {
 
 		if (!this.countiesProperties.getCoutiesMap().containsKey(county)) {
 			return "[\"noEvent\"]";
@@ -44,26 +44,21 @@ public class EventSelection {
 			// get event selection key
 			StringBuilder eventKey = new StringBuilder();
 			eventKey.append(duration + "_");
-			eventKey.append(intensity + "_");
-			eventKey.append(depth + "_");
+			eventKey.append(intensitve + "_");
+			eventKey.append(accumulation + "_");
 			eventKey.append(pattern);
 
+			List<String> eventList = Optional
+					.ofNullable(
+							this.countiesProperties.getCoutiesMap().get(county).getEventMap().get(eventKey.toString()))
+					.orElse(new ArrayList<>());
 
-
-			// build eventList in rainfall selected
-			JsonArray eventList = new JsonArray();
-			for (String event : new File(eventFolderPath.toString()).list()) {
-				eventList.add(event);
-			}
-
-			if (eventList.size() == 0) {
-				eventList.add("noEvent");
-			}
-
+			JsonArray eventArray = new JsonArray();
+			eventList.forEach(e -> eventArray.add(e));
 
 			// build return json
 			JsonObject outJson = this.selection.getBasicReturnJson(county);
-			outJson.add("eventList", eventList);
+			outJson.add("eventList", eventArray);
 
 			return outJson.toString();
 		}
@@ -71,7 +66,7 @@ public class EventSelection {
 
 
 	@GetMapping("/eventSelection/getEventProperties")
-	public String getEventProperties(String contries) {
+	public String getEventProperties() {
 		JsonObject outJson = new JsonObject();
 
 		// duration
