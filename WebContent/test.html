@@ -1,38 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-</script>
-</head>
-<body>
-	
-	<h1 id="h1"></h1>
-</body>
-
-
-
-
-<script>
-	
-$.ajax({
-	url : "./eventSelection/allEvents",
-	dataType : "text",
-	data : {
-		county: "Taipei",
-		duration: 12,
-		depth: 100,
-		intensity: 100,
-		pattern: "mean",
-	},
-	success : function(data) {
-		$("#h1").text(data);
-	},
-});
-
-
-</script>
-</html>
+<div id="f5CPe9" class="map-legend-block z-div"><span id="f5CPf9"
+		style="background: linear-gradient(to right, rgba(0,204,255,0.6), rgba(51,255,0,0.6)); width:12.5%"><span
+			id="f5CPg9">25</span></span><span id="f5CPh9"
+		style="background: linear-gradient(to right, rgba(51,255,0,0.6), rgba(255,204,0,0.6)); width:12.5%"><span
+			id="f5CPi9">50</span></span><span id="f5CPj9"
+		style="background: linear-gradient(to right, rgba(255,204,0,0.6), rgba(254,0,0,0.6)); width:12.5%"><span
+			id="f5CPk9">75</span></span><span id="f5CPl9"
+		style="background: linear-gradient(to right, rgba(254,0,0,0.6), rgba(204,0,1,0.6)); width:12.5%"><span
+			id="f5CPm9">100</span></span><span id="f5CPn9"
+		style="background: linear-gradient(to right, rgba(204,0,1,0.6), rgba(153,1,0,0.6)); width:12.5%"><span
+			id="f5CPo9">125</span></span><span id="f5CPp9"
+		style="background: linear-gradient(to right, rgba(153,1,0,0.6), rgba(153,0,155,0.6)); width:12.5%"><span
+			id="f5CPq9">150</span></span><span id="f5CPr9"
+		style="background: linear-gradient(to right, rgba(153,0,155,0.6), rgba(203,0,204,0.6)); width:12.5%"><span
+			id="f5CPs9">175</span></span><span id="f5CPt9"
+		style="background: linear-gradient(to right, rgba(203,0,204,0.6), rgba(255,0,254,0.6)); width:12.5%"><span
+			id="f5CPu9">200</span></span></div>

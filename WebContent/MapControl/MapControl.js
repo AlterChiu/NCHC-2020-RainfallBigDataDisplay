@@ -101,18 +101,19 @@ class MapControl {
             [maxY, maxX]
         ];
         var oldLayer = this.floodPngLayer;
+        this.removeLayer(oldLayer, this.floodMap);
 
         this.floodPngLayer = new L.imageOverlay(imageUrl, imageBound);
         this.floodPngLayer.addTo(this.floodMap);
 
-        this.removeLayer(oldLayer, this.floodMap);
+        
     }
 
     removeLayer(layer, map) {
         try {
             setTimeout(function () {
                 map.removeLayer(layer);
-            }, 500)
+            }, 5)
         } catch (e) {}
     }
 

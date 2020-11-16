@@ -39,17 +39,13 @@ public class CountiesProperties {
 		return this.coutiesMap;
 	}
 
-
-
-
-
 	@Bean
 	public void initialCoutiesMap() throws Exception {
 		this.coutiesMap = new LinkedHashMap<>();
 
 		// read counties file
-		JsonArray coutiesArray = new AtFileReader(this.globalProperty.getCountyPropertiesAdd()).getJson()
-				.getAsJsonArray();
+		JsonArray coutiesArray = new AtFileReader(this.globalProperty.getCountyPropertiesAdd(), AtFileReader.UTF8)
+				.getJson().getAsJsonArray();
 
 		// counties = {Chinese , English}
 		for (JsonElement countyElement : coutiesArray) {

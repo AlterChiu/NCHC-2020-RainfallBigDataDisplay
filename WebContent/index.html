@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
+  <title>巨量情境淹水資料集</title>
+  <link rel="icon" href="./mainpage/LOGO/nchc-w.png" type="image/x-icon" />
 </head>
 
 <body>
@@ -45,50 +47,55 @@
       </div>
     </div>
   </div>
-  <div class="">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="text-center">大數據二維淹水模擬成果展示頁面</h2>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="py-2">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-lg-3 pl-3" style="background-color:gray">留白</div>
-        <div class="col-md-6 col-lg-9 pl-3">
-          <h1>網頁介紹文字</h1>
+        <div class="col-md-4 col-lg-3 pl-3">
+          <img class="logoImage-primary" src="./mainpage/LOGO/nchc.png">
+          <div class="cooper-png">
+            <ul>
+              <li>
+                <a>
+                  <img class="logoImage-secondary" src="./mainpage/LOGO/fondus-03.png">
+                </a>
+              </li>
+              <li>
+                <a>
+                  <img class="logoImage-secondary" src="./mainpage/LOGO/Taipei Tech Logo-cmyk.jpg">
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-8 col-lg-9 pl-3 intro-text">
+          <span>透過網格雨量水文統計方法產生巨量情境降雨事件，配合淹水模型進行模擬演算，推估各縣市在不同降雨情境下的淹水潛勢狀況。
+          </span>
         </div>
       </div>
       <div class="row">
         <div class="col-md-4 col-lg-3 pl-3">
           <div class="row">
-            <div style="height:50px"> 留白 </div>
-          </div>
-          <div class="row">
             <div class="col-md-12">
               <div id="rangeSection">
-                  <div class="range-selection-backgroud" id="rainfallDuration-selection">
-                   <div class="subtitleShape"></div>
-                    <h5 class="mb-0 range-selection-button">
-                      <div id="countyTitle" data-toggle="collapse" data-target="#county-data"
-                        aria-expanded="true" aria-controls="county-data"> 
-                        <span>縣市選擇</span>
-                        <span class="range-selection-en">(Counties)</span>
-                      </div>
-                    </h5>
-                  </div>
-                  <div id="county-data" class="collapse show" aria-labelledby="county-selection"
-                    data-parent="#rangeSection">
-                    <div id="county-value" class="card-body">
+                <div class="range-selection-backgroud" id="rainfallDuration-selection">
+                  <div class="subtitleShape"></div>
+                  <h5 class="mb-0 range-selection-button">
+                    <div id="countyTitle" data-toggle="collapse" data-target="#county-data" aria-expanded="true"
+                      aria-controls="county-data">
+                      <span>縣市選擇</span>
+                      <span class="range-selection-en">(Counties)</span>
                     </div>
+                  </h5>
+                </div>
+                <div id="county-data" class="collapse show" aria-labelledby="county-selection"
+                  data-parent="#rangeSection">
+                  <div id="county-value" class="card-body">
                   </div>
+                </div>
               </div>
               <div class="range-selection-backgroud" id="rainfallDuration-selection">
                 <div class="subtitleShape"></div>
-                <div class="mb-0 range-selection-button"> 
+                <div class="mb-0 range-selection-button">
                   <span>降雨延時</span>
                   <span class="range-selection-en">(duration, hr)</span>
                 </div>
@@ -145,80 +152,127 @@
             <div class="col-md-6 col-large-6">
               <div class="row">
                 <div class="col-md-12 px-1 pl-3">
-                  <div style="height:50px"> 淹水資訊 </div>
+                  <div style="height:50px" class="mapInfo"> 淹水資訊 </div>
                   <div id="floodMap" class="map"></div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 col-large-12 pl-3">
-                  <span>
-                    <div class="scaleText">淹水Scale</div>
-                  </span>
-                  <span>
-                    <img class="scalePNG" src="./mainpage/floodScale.png"/>
-                  </span>
+                  <div id="vIzPy8" class="map-legend">
+                    <span class="map-legend-title" id="vIzPd9" style="color:black">淹水深度(m)</span>
+                    <span id="vIzPz8" class="map-legend-block">
+                      <span id="vIzP_9"
+                        style="background: linear-gradient(to right, rgba(253,211,127,0.9), rgba(253,211,127,0.9)); width:13.3%">
+                        <span id="vIzP09">0.5</span>
+                      </span>
+                      <span id="vIzP19"
+                        style="background: linear-gradient(to right, rgba(253,211,127,0.9), rgba(252,186,4,0.9)); width:13.3%">
+                        <span id="vIzP29">1.0</span>
+                      </span>
+                      <span id="vIzP39"
+                        style="background: linear-gradient(to right, rgba(252,186,4,0.9), rgba(255,97,13,0.9)); width:13.3%">
+                        <span id="vIzP49">1.5</span>
+                      </span>
+                      <span id="vIzP59"
+                        style="background: linear-gradient(to right, rgba(255,97,13,0.9), rgba(250,1,0,0.9)); width:13.4%">
+                        <span id="vIzP69">2.0</span>
+                      </span>
+                      <span id="vIzP79"
+                        style="background: linear-gradient(to right, rgba(250,1,0,0.9), rgba(132,0,0,0.9)); width:13.4%">
+                        <span id="vIzP89">2.5</span>
+                      </span>
+                      <span id="vIzP99"
+                        style="background: linear-gradient(to right, rgba(132,0,0,0.9), rgba(132,0,0,0.9)); width:13.3%">
+                        <span id="vIzPa9">3.0</span>
+                      </span>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col-md-6 col-large-6">
               <div class="row">
-                <div class="col-md-12 px-1 pl-3">
-                  <div style="height:50px"> 雨量資訊 </div>
+                <div class="col-md-12 px-1 pl-2">
+                  <div style="height:50px" class="mapInfo"> 雨量資訊 </div>
                   <div id="rainfallMap" class="map"></div>
                 </div>
               </div>
-              <div class="row pl-4">
-                <span>
-                  <div class="scaleText">雨量Scale</div>
-                </span>
-                <span>
-                  <img class="scalePNG" src="./mainpage/rainfallScale.png"/>
+              <div id="vIzPy8" class="map-legend">
+                <span class="map-legend-title" id="vIzPd9" style="color:black">降雨強度 (mm)</span>
+                <span id="vIzPz8" class="map-legend-block">
+                  <span id="vIzP_9"
+                    style="background: linear-gradient(to right, rgba(0,204,255,0.9), rgba(51,255,0,0.9)); width:9%">
+                    <span id="vIzP09">25</span>
+                  </span>
+                  <span id="vIzP19"
+                    style="background: linear-gradient(to right,rgba(51,255,0,0.9), rgba(255,204,0,0.9)); width:9%">
+                    <span id="vIzP29">50</span>
+                  </span>
+                  <span id="vIzP39"
+                    style="background: linear-gradient(to right,rgba(255,204,0,0.9), rgba(254,0,0,0.9)); width:10%">
+                    <span id="vIzP49">75</span>
+                  </span>
+                  <span id="vIzP59"
+                    style="background: linear-gradient(to right,rgba(254,0,0,0.9), rgba(204,0,1,0.9)); width:10%">
+                    <span id="vIzP69">100</span>
+                  </span>
+                  <span id="vIzP79"
+                    style="background: linear-gradient(to right,rgba(204,0,1,0.9), rgba(153,1,0,0.9)); width:10%">
+                    <span id="vIzP89">125</span>
+                  </span>
+                  <span id="vIzP99"
+                    style="background: linear-gradient(to right, rgba(153,1,0,0.9), rgba(153,0,155,0.9)); width:10%">
+                    <span id="vIzPa9">150</span>
+                  </span>
+                  <span id="vIzP99"
+                    style="background: linear-gradient(to right,rgba(153,0,155,0.9), rgba(203,0,204,0.9)); width:10%">
+                    <span id="vIzPa9">175</span>
+                  </span>
+                  <span id="vIzP99"
+                    style="background: linear-gradient(to right, rgba(203,0,204,0.9), rgba(255,0,254,0.9)); width:12%">
+                    <span id="vIzPa9">200</span>
+                  </span>
                 </span>
               </div>
             </div>
-          </div>
-          <div class="row playControl-platform px-2">
-            <div id="play-button" class="playControl-button">
-              <svg width="18" height="18" viewBox="4 6 14 14" fill="none">
-                <path d="M15 12.3301L9 16.6603L9 8L15 12.3301Z" fill="#66666e"></path>
-              </svg>
+            <div class="row playControl-platform px-2">
+              <div id="play-button" class="playControl-button">
+                <svg width="18" height="18" viewBox="4 6 14 14" fill="none">
+                  <path d="M15 12.3301L9 16.6603L9 8L15 12.3301Z" fill="#66666e"></path>
+                </svg>
+              </div>
+              <div id="pause-button" class="playControl-button">
+                <svg width="18" height="18" viewBox="4 4 16 16" fill="none">
+                  <path d="M11 7H8V17H11V7Z" fill="#66666e"></path>
+                  <path d="M13 17H16V7H13V17Z" fill="#66666e"></path>
+                </svg>
+              </div>
+              <div id="stop-button" class="playControl-button">
+                <svg width="18" height="18" viewBox="3 3 18 18" fill="none">
+                  <path d="M7 7H17V17H7V7Z" fill="#66666e"></path>
+                </svg>
+              </div>
+              <input class="timeLine" type="range" id="timeLine" min="1" max="12" step="1">
             </div>
-            <div id="pause-button" class="playControl-button">
-              <svg width="18" height="18" viewBox="4 4 16 16" fill="none">
-                <path d="M11 7H8V17H11V7Z" fill="#66666e"></path>
-                <path d="M13 17H16V7H13V17Z" fill="#66666e"></path>
-              </svg>
-            </div>
-            <div id="stop-button" class="playControl-button">
-              <svg width="18" height="18" viewBox="3 3 18 18" fill="none">
-                <path d="M7 7H17V17H7V7Z" fill="#66666e"></path>
-              </svg>
-            </div>
-            <input class="timeLine" type="range" id="timeLine" min="1" max="12" step="1">
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-  </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
 
-  <!-- Leaflet plugin -->
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-  <script src="./MapControl/L.Map.Sync.js"></script>
+    <!-- Leaflet plugin -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""></script>
+    <script src="./MapControl/L.Map.Sync.js"></script>
 
-  <!-- user plugin -->
-  <script src="./MapControl/MapControl.js"></script>
-  <script src="./TimeControlSection/TimeControl.js"></script>
-  <script src="./RangeSection/RangeSectionAction.js"></script>
+    <!-- user plugin -->
+    <script src="./MapControl/MapControl.js"></script>
+    <script src="./TimeControlSection/TimeControl.js"></script>
+    <script src="./RangeSection/RangeSectionAction.js"></script>
 
 
 </body>

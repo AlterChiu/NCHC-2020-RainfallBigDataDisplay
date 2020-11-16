@@ -49,7 +49,7 @@ public class InitialProperties {
 	}
 
 	public String getEventIntensive() {
-		return this.eventDuration;
+		return this.eventIntensive;
 	}
 
 	public String getEventAccumulation() {

@@ -35,13 +35,12 @@
 
 .playControl-platform {
     background-color: #e6e6e9;
-    border-radius: 20px;
+    border-radius: 12px;
     height: 25px;
     line-height: 13px;
     width: 95%;
     display: flex;
-    margin-left: 15px;
-    padding-right: 15px;
+    margin-left: 28px;
 }
 
 
