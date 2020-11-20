@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import usualTool.AtFileReader;
 
 
@@ -44,11 +44,15 @@ public class CountiesProperties {
 		this.coutiesMap = new LinkedHashMap<>();
 
 		// read counties file
-		JsonArray coutiesArray = new AtFileReader(this.globalProperty.getCountyPropertiesAdd(), AtFileReader.UTF8)
-				.getJson().getAsJsonArray();
+		AtFileReader reader = new AtFileReader(this.globalProperty.getCountyPropertiesAdd(), AtFileReader.UTF8);
+
+		StringBuilder sb = new StringBuilder();
+		for (String line : reader.getContain()) {
+			sb.append(line);
+		}
 
 		// counties = {Chinese , English}
-		for (JsonElement countyElement : coutiesArray) {
+		for (JsonElement countyElement : new JsonParser().parse(sb.toString()).getAsJsonArray()) {
 			JsonObject countyObject = countyElement.getAsJsonObject();
 
 			// key in English

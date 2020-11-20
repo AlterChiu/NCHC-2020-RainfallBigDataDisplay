@@ -65,8 +65,8 @@
     margin-left: auto;
     margin-left: auto;
     text-align: center;
-    line-height: 1.5px;
-    margin-bottom: -34px;
+    line-height: 12.5px;
+    margin-top:-55px;
 }
 
 .intro-text{
@@ -75,7 +75,7 @@
     font-weight:bold;
     vertical-align: middle;
     padding-bottom: 42px;
-    margin-top: 71px;
+    margin-top: 14px;
     margin-bottom: 5px;
 }
 
@@ -88,5 +88,5 @@
     text-align: center;
     padding-bottom: 5px;
     margin-left: -37px;
+    margin-bottom: -20px;
 }
-
